@@ -1,60 +1,6 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 20px;
-  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Earth_poster_large.jpg/800px-Earth_poster_large.jpg') no-repeat center center fixed;
+  background: url('1.jpg') no-repeat center center fixed;
   background-size: cover;
   color: white;
-  position: relative;
-  z-index: 1;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: -1;
-}
-
-nav a {
-  margin-right: 15px;
-  text-decoration: none;
-  color: #00ffff;
-  font-weight: bold;
-}
-
-nav a:hover {
-  color: #ffffff;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: none;
-  border-radius: 5px;
-}
-
-button {
-  padding: 10px 20px;
-  background-color: #00bfff;
-  border: none;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0099cc;
-}
-
-.debate-item {
-  margin-bottom: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 10px;
-  border-radius: 8px;
+  font-family: Arial, sans-serif;
 }
