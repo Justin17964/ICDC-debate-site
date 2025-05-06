@@ -1,6 +1,8 @@
 body {
-  background: url('1.jpg') no-repeat center center fixed;
+  background: url('backgroun.jpg') no-repeat center center fixed;
   background-size: cover;
   color: white;
   font-family: Arial, sans-serif;
+  position: relative;
+  z-index: 1;
 }
