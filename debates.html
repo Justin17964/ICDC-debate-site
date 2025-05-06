@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>All Debates</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAf_20WQ-9lfvdOQ7iAL3MqSithP4ZfHl0",
+      authDomain: "icdc-df964.firebaseapp.com",
+      projectId: "icdc-df964",
+      storageBucket: "icdc-df964.firebasestorage.app",
+      messagingSenderId: "317996475420",
+      appId: "1:317996475420:web:90d934552565f7c4106bd9",
+      measurementId: "G-D50PVJHHK4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadDebates() {
+      const debateList = document.getElementById("debate-list");
+      debateList.innerHTML = "<p>Loading debates...</p>";
+
+      const q = query(collection(db, "debates"), orderBy("timestamp", "desc"));
+      const querySnapshot = await getDocs(q);
+
+      debateList.innerHTML = "";
+      if (querySnapshot.empty) {
+        debateList.innerHTML = "<p>No debates found.</p>";
+      }
+
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        const div = document.createElement("div");
+        div.className = "debate-item";
+        div.innerHTML = `<h3>${data.title}</h3><p>${data.argument}</p><hr>`;
+        debateList.appendChild(div);
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", loadDebates);
+  </script>
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a> |
+    <a href="submit.html">Submit Debate</a> |
+    <a href="debates.html">All Debates</a>
+  </nav>
+  <hr>
+
+  <h1>All Submitted Debates</h1>
+  <div id="debate-list"></div>
+</body>
+</html>

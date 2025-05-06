@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Submit Debate</title>
+  <script type="module">
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
+
+    // Firebase config from your project
+    const firebaseConfig = {
+      apiKey: "AIzaSyAf_20WQ-9lfvdOQ7iAL3MqSithP4ZfHl0",
+      authDomain: "icdc-df964.firebaseapp.com",
+      projectId: "icdc-df964",
+      storageBucket: "icdc-df964.firebasestorage.app",
+      messagingSenderId: "317996475420",
+      appId: "1:317996475420:web:90d934552565f7c4106bd9",
+      measurementId: "G-D50PVJHHK4"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Submit debate handler
+    async function submitDebate(event) {
+      event.preventDefault();
+      const title = document.getElementById("title").value;
+      const argument = document.getElementById("argument").value;
+
+      try {
+        await addDoc(collection(db, "debates"), {
+          title: title,
+          argument: argument,
+          timestamp: new Date()
+        });
+        alert("Debate submitted successfully!");
+        document.getElementById("debate-form").reset();
+      } catch (e) {
+        console.error("Error adding debate: ", e);
+        alert("Error submitting debate.");
+      }
+    }
+
+    window.submitDebate = submitDebate;
+  </script>
+</head>
+<body>
+  <h1>Submit Your Debate</h1>
+  <form id="debate-form" onsubmit="submitDebate(event)">
+    <input type="text" id="title" placeholder="Debate Title" required><br>
+    <textarea id="argument" placeholder="Your Argument" required></textarea><br>
+    <button type="submit">Submit</button>
+  </form>
+</body>
+</html>
