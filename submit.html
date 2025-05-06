@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
   <title>Submit Debate</title>
+  <link rel="stylesheet" href="styles.css">
   <script type="module">
-    // Import Firebase modules
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-app.js";
     import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
-    // Firebase config from your project
     const firebaseConfig = {
       apiKey: "AIzaSyAf_20WQ-9lfvdOQ7iAL3MqSithP4ZfHl0",
       authDomain: "icdc-df964.firebaseapp.com",
@@ -18,11 +18,9 @@
       measurementId: "G-D50PVJHHK4"
     };
 
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // Submit debate handler
     async function submitDebate(event) {
       event.preventDefault();
       const title = document.getElementById("title").value;
@@ -46,6 +44,13 @@
   </script>
 </head>
 <body>
+  <nav>
+    <a href="index.html">Home</a> |
+    <a href="submit.html">Submit Debate</a> |
+    <a href="debates.html">All Debates</a>
+  </nav>
+  <hr>
+
   <h1>Submit Your Debate</h1>
   <form id="debate-form" onsubmit="submitDebate(event)">
     <input type="text" id="title" placeholder="Debate Title" required><br>
