@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+
+  <!-- Navigation Bar -->
   <nav>
     <ul>
       <li><a href="#home">Home</a></li>
@@ -16,25 +18,79 @@
     </ul>
   </nav>
 
+  <!-- Home Section -->
   <div id="home" class="section overlay">
     <h1>Welcome to ICDC</h1>
     <p>Where your thoughts have a voice and your voice makes impact.</p>
   </div>
 
+  <!-- About Section -->
   <div id="about" class="section overlay">
     <h2>About ICDC</h2>
-    <p>A place where you can think and challenge ideas through debate.</p>
+    <p>A place where you can think, challenge ideas, and grow through debate. Join passionate speakers from all over the world and make your voice heard!</p>
   </div>
 
+  <!-- Join Section with Firebase Sign-Up Form -->
   <div id="join" class="section overlay">
     <h2>Join the Debate</h2>
-    <p>Sign up to participate and your data goes directly into our Firebase database.</p>
-    <!-- Sign-up form can go here -->
+    <p>Sign up below to register for our upcoming debates. Your info goes directly to our Firebase database.</p>
+
+    <form id="signupForm">
+      <input type="text" id="name" placeholder="Your Name" required><br><br>
+      <input type="email" id="email" placeholder="Your Email" required><br><br>
+      <input type="text" id="topic" placeholder="Debate Topic" required><br><br>
+      <button type="submit">Sign Up</button>
+    </form>
+    <p id="successMsg" style="color: lightgreen;"></p>
   </div>
 
+  <!-- Contact Section -->
   <div id="contact" class="section overlay">
     <h2>Contact Us</h2>
     <p>Email: Justin’s.qi@gmail.com</p>
   </div>
+
+  <!-- Firebase Sign-Up Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAf_20WQ-9lfvdOQ7iAL3MqSithP4ZfHl0",
+      authDomain: "icdc-df964.firebaseapp.com",
+      projectId: "icdc-df964",
+      storageBucket: "icdc-df964.firebasestorage.app",
+      messagingSenderId: "317996475420",
+      appId: "1:317996475420:web:90d934552565f7c4106bd9",
+      measurementId: "G-D50PVJHHK4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore(app);
+
+    document.getElementById("signupForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const topic = document.getElementById("topic").value.trim();
+
+      try {
+        await addDoc(collection(db, "signups"), {
+          name,
+          email,
+          topic,
+          timestamp: new Date()
+        });
+        document.getElementById("successMsg").textContent = "Sign-up successful!";
+        document.getElementById("signupForm").reset();
+      } catch (error) {
+        console.error("Error:", error);
+        document.getElementById("successMsg").textContent = "Error: " + error.message;
+      }
+    });
+  </script>
+
 </body>
 </html>
