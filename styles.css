@@ -1,23 +1,23 @@
-/* Full-screen background image with reduced zoom */
+/* Background Image via <img> */
 #bg {
   position: fixed;
   top: 0;
   left: 0;
-  width: 140vw; /* make canvas larger to prevent zoom */
+  width: 140vw;
   height: 140vh;
-  object-fit: contain; /* show the whole image */
+  object-fit: contain;
   z-index: -1;
-  opacity: 0.3; /* slightly fade the image behind text */
+  opacity: 0.3;
 }
 
-/* General styling */
+/* Body Styling */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   color: white;
 }
 
-/* Navigation Bar */
+/* Navigation */
 nav {
   background-color: rgba(0, 0, 0, 0.85);
   position: fixed;
@@ -64,7 +64,7 @@ nav ul li a:hover {
   border-radius: 12px;
 }
 
-/* Form styling */
+/* Form Styling */
 form input, form button {
   width: 100%;
   max-width: 400px;
