@@ -1,0 +1,46 @@
+<!-- Firebase + Firestore Sign-Up Script -->
+<script type="module">
+  // Import Firebase SDK
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+  // Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyAf_20WQ-9lfvdOQ7iAL3MqSithP4ZfHl0",
+    authDomain: "icdc-df964.firebaseapp.com",
+    projectId: "icdc-df964",
+    storageBucket: "icdc-df964.firebasestorage.app",
+    messagingSenderId: "317996475420",
+    appId: "1:317996475420:web:90d934552565f7c4106bd9",
+    measurementId: "G-D50PVJHHK4"
+  };
+
+  // Initialize Firebase and Firestore
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const db = getFirestore(app);
+
+  // Form submission logic
+  document.getElementById("signupForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const topic = document.getElementById("topic").value.trim();
+
+    try {
+      await addDoc(collection(db, "signups"), {
+        name,
+        email,
+        topic,
+        timestamp: new Date()
+      });
+      document.getElementById("successMsg").textContent = "Sign-up successful!";
+      document.getElementById("signupForm").reset();
+    } catch (error) {
+      console.error("Error signing up:", error);
+      document.getElementById("successMsg").textContent = "Error: " + error.message;
+    }
+  });
+</script>
