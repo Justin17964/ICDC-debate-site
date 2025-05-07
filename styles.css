@@ -1,23 +1,23 @@
-/* Background Image via <img> */
+/* Fullscreen Background Image */
 #bg {
   position: fixed;
   top: 0;
   left: 0;
-  width: 140vw;
-  height: 140vh;
-  object-fit: contain;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover; /* Fills screen, no borders, no zooming now */
   z-index: -1;
-  opacity: 0.3;
+  opacity: 0.3; /* Optional: fade for better text visibility */
 }
 
-/* Body Styling */
+/* Body Styles */
 body {
   margin: 0;
   font-family: Arial, sans-serif;
   color: white;
 }
 
-/* Navigation */
+/* Navigation Bar */
 nav {
   background-color: rgba(0, 0, 0, 0.85);
   position: fixed;
@@ -49,14 +49,14 @@ nav ul li a:hover {
   color: #00ffcc;
 }
 
-/* Sections */
+/* Section Layout */
 .section {
   padding: 100px 20px;
   min-height: 100vh;
   box-sizing: border-box;
 }
 
-/* Overlay for readability */
+/* Text Overlay for Content Readability */
 .overlay {
   background-color: rgba(0, 0, 0, 0.5);
   margin-top: 60px;
@@ -65,7 +65,8 @@ nav ul li a:hover {
 }
 
 /* Form Styling */
-form input, form button {
+form input,
+form button {
   width: 100%;
   max-width: 400px;
   padding: 12px;
