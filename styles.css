@@ -1,6 +1,49 @@
 body {
-  background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Earth_poster_large.jpg/800px-Earth_poster_large.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: white;
+  margin: 0;
   font-family: Arial, sans-serif;
+  background-image: url('background.jpg'); /* or your actual filename */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: white;
+}
+
+nav {
+  background-color: rgba(0, 0, 0, 0.8);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  margin: 0;
+  list-style-type: none;
+}
+
+nav ul li {
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.section {
+  padding: 100px 20px;
+  min-height: 100vh;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-top: 60px;
+  padding: 40px;
+  border-radius: 10px;
 }
