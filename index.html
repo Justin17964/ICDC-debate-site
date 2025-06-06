@@ -3,6 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <title>ICDC Debate Site</title>
+  <style>
+    /* Full-page background image */
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 50px;
+    }
+
+    #google-login {
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      background-color: #4285F4;
+      color: white;
+      cursor: pointer;
+    }
+
+    #google-login:hover {
+      background-color: #3367D6;
+    }
+
+    #user-info {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
 </head>
 <body>
   <h1>Welcome to ICDC Debate Site</h1>
@@ -10,13 +45,11 @@
   <div id="user-info"></div>
 
   <script type="module">
-    // ✅ Import Firebase SDK modules (v10.12.2)
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    // ✅ Your Firebase config (keep safe)
     const firebaseConfig = {
       apiKey: "AIzaSyD8PgqBk77scFWCP0CbAkK__01Dp6tr4Vg",
       authDomain: "icdc-fca25.firebaseapp.com",
@@ -27,31 +60,28 @@
       measurementId: "G-W1YL50VBF9"
     };
 
-    // ✅ Initialize Firebase core
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    // ✅ Login button
     document.getElementById("google-login").addEventListener("click", async () => {
       try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
 
-        document.getElementById("user-info").innerText = `Hello, ${user.displayName}`;
+        document.getElementById("user-info").innerText = `Hello, ${user.displayName}!`;
 
-        // ✅ Save user info to Firestore
         await setDoc(doc(db, "users", user.uid), {
           name: user.displayName,
           email: user.email,
           loginTime: new Date().toISOString()
         });
 
-        console.log("User logged in and saved.");
+        console.log("User saved to Firestore.");
       } catch (error) {
-        console.error("Login error:", error.message);
+        console.error("Login failed:", error.message);
       }
     });
   </script>
