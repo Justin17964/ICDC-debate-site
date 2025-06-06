@@ -1,103 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ICDC Debate</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8">
+  <title>ICDC Debate Site</title>
 </head>
 <body>
+  <h1>Welcome to ICDC Debate Site</h1>
+  <button id="google-login">Login with Google</button>
+  <div id="user-info"></div>
 
-  <!-- Background Image -->
-  <img src="background.jpg" id="bg" alt="ICDC background" />
-
-  <!-- Navigation Bar -->
-  <nav>
-    <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About ICDC</a></li>
-      <li><a href="#join">Join</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-
-  <!-- Home Section -->
-  <div id="home" class="section overlay">
-    <h1>Welcome to ICDC</h1>
-    <p>Where your thoughts have a voice and your voice makes impact.</p>
-  </div>
-
-  <!-- About Section -->
-  <div id="about" class="section overlay">
-    <h2>About ICDC</h2>
-    <p>We want your case to be as strong as a cactus. ICDC is a Debate organization. Hosting tournaments mainly.</p>
-    <p><strong>ICDC President:</strong> Ian</p>
-    <p><strong>Head of Advertisement / Customer Service:</strong> Louis</p>
-    <p><strong>Head of Judges:</strong> Melody</p>
-    <p>Thanks a lot!</p>
-  </div>
-
-  <!-- Join Section -->
-  <div id="join" class="section overlay">
-    <h2>Join the Debate</h2>
-    <p>Sign up below to register for our upcoming debates. Your info goes directly to our Firebase database.</p>
-
-    <form id="signupForm">
-      <input type="text" id="name" placeholder="Your Name" required><br><br>
-      <input type="email" id="email" placeholder="Your Email" required><br><br>
-      <input type="text" id="topic" placeholder="Debate Topic" required><br><br>
-      <button type="submit">Sign Up</button>
-    </form>
-    <p id="successMsg" style="color: lightgreen;"></p>
-  </div>
-
-  <!-- Contact Section -->
-  <div id="contact" class="section overlay">
-    <h2>Contact Us</h2>
-    <p>Email: <a href="mailto:ianye1412@gmail.com">ianye1412@gmail.com</a></p>
-  </div>
-
-  <!-- Firebase Script -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-analytics.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+    // ✅ Import Firebase SDK modules (v10.12.2)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+    // ✅ Your Firebase config (keep safe)
     const firebaseConfig = {
-      apiKey: "AIzaSyAf_20WQ-9lfvdOQ7iAL3MqSithP4ZfHl0",
-      authDomain: "icdc-df964.firebaseapp.com",
-      projectId: "icdc-df964",
-      storageBucket: "icdc-df964.firebasestorage.app",
-      messagingSenderId: "317996475420",
-      appId: "1:317996475420:web:90d934552565f7c4106bd9",
-      measurementId: "G-D50PVJHHK4"
+      apiKey: "AIzaSyD8PgqBk77scFWCP0CbAkK__01Dp6tr4Vg",
+      authDomain: "icdc-fca25.firebaseapp.com",
+      projectId: "icdc-fca25",
+      storageBucket: "icdc-fca25.appspot.com",
+      messagingSenderId: "398496199141",
+      appId: "1:398496199141:web:afbde0dcc0eb3e714abf0c",
+      measurementId: "G-W1YL50VBF9"
     };
 
+    // ✅ Initialize Firebase core
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
+    const auth = getAuth(app);
     const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
 
-    document.getElementById("signupForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const topic = document.getElementById("topic").value.trim();
-
+    // ✅ Login button
+    document.getElementById("google-login").addEventListener("click", async () => {
       try {
-        await addDoc(collection(db, "signups"), {
-          name,
-          email,
-          topic,
-          timestamp: new Date()
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+
+        document.getElementById("user-info").innerText = `Hello, ${user.displayName}`;
+
+        // ✅ Save user info to Firestore
+        await setDoc(doc(db, "users", user.uid), {
+          name: user.displayName,
+          email: user.email,
+          loginTime: new Date().toISOString()
         });
-        document.getElementById("successMsg").textContent = "Sign-up successful!";
-        document.getElementById("signupForm").reset();
+
+        console.log("User logged in and saved.");
       } catch (error) {
-        console.error("Error:", error);
-        document.getElementById("successMsg").textContent = "Error: " + error.message;
+        console.error("Login error:", error.message);
       }
     });
   </script>
-
 </body>
 </html>
